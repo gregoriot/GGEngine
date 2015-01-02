@@ -60,7 +60,6 @@ public class GGGamePanel {
         try {
             Display.create();
         } catch (LWJGLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         

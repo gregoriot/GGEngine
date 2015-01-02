@@ -92,4 +92,74 @@ public class GGCollision {
 
 		return true;
 	}
+	
+	public static boolean tile(GGSprite sprite, GGTileMap map, int layer){
+		int beginX = (int)(sprite.position.x / map.tileSizeX);
+		int endX = (int)((sprite.position.x + sprite.width) / map.tileSizeX);
+		
+		int beginY = (int)(sprite.position.y / map.tileSizeY);
+		int endY = (int)((sprite.position.y + sprite.height) / map.tileSizeY);
+		
+		try{
+			for(int y=beginY; y<=endY; y++){
+				for(int x=beginX; x<=endX; x++){
+					if(map.layers.get(layer)[y][x] > 0){
+						return true;
+					}
+				}
+			}
+		}catch(Exception e){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public static boolean tile(int posX, int posY, int width, int height, GGTileMap map, int layer){
+		int beginX = (int)(posX / map.tileSizeX);
+		int endX = (int)((posX + width) / map.tileSizeX);
+		
+		int beginY = (int)(posY / map.tileSizeY);
+		int endY = (int)((posY + height) / map.tileSizeY);
+		
+		try{
+			for(int y=beginY; y<=endY; y++){
+				for(int x=beginX; x<=endX; x++){
+					if(map.layers.get(layer)[y][x] > 0){
+						return true;
+					}
+				}
+			}
+		}catch(Exception e){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * 0 - don't collid
+	 * 1 - left
+	 * 2 - Right
+	 * 3 - top
+	 * 4 - bottom
+	 * */
+	public static int mapLimits(int posX, int posY, int width, int height, 
+			int mapX, int mapY, int mapWidth, int mapHeight){
+		if(posX < mapX)
+			return 1;
+		
+		if(posX+width > mapX+mapWidth)
+			return 2;
+		
+		if(posY < mapY)
+			return 3;
+		
+		if(posY+height > mapY + mapHeight)
+			return 4;
+		
+		return 0;
+	}
+	
+	
 }

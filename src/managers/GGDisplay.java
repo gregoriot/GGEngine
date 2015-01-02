@@ -46,8 +46,10 @@ public class GGDisplay {
             });
             
             System.out.println("Main - main - Available displayModes");
+            int count = 0;
             for(Iterator<DisplayMode> iterator = displays.iterator(); iterator.hasNext();){
-                System.out.println(iterator.next().toString());
+                System.out.println(count+" : "+iterator.next().toString());
+                count ++;
             }
             
         } catch (LWJGLException e) {

@@ -1,4 +1,6 @@
-package graphics;
+package managers;
+
+import graphics.GGSprite;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -12,7 +14,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 
-public class TileMap extends GGSprite {
+public class GGTileMap extends GGSprite {
     
     public LinkedList<Integer[][]> layers;
     public int tileSetQtdX;
@@ -31,7 +33,7 @@ public class TileMap extends GGSprite {
     private int indicesBufferRectId;
     private int indicesQtd;
     
-    public TileMap(GGTexture tileSet) {
+    public GGTileMap(GGTexture tileSet) {
         super(0, 0, 0, 0);
         this.texture = tileSet;
         

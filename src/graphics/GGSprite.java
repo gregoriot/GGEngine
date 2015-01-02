@@ -30,6 +30,8 @@ public abstract class GGSprite {
     
     /** If have parent */
     public GGSprite parent;
+    
+    public int layerScene;
 
     /**
      * Sprite constructor

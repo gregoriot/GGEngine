@@ -174,7 +174,7 @@ public class GGRenderGL {
 	
 	public static void pushMatrix(){
 	    matrices.push(matrixModelView);
-	    matrixModelView = matrices.getLast();
+	    matrixModelView = new Matrix4f( matrices.getLast());
 	}
 	
 	public static void popMatrix(){

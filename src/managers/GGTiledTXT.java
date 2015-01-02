@@ -1,7 +1,5 @@
 package managers;
 
-import graphics.TileMap;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,7 +7,7 @@ import java.io.InputStreamReader;
 import openGL.GGTexture;
 
 
-public class TiledTXT {
+public class GGTiledTXT {
 
     /** 
     * Constructor
@@ -17,8 +15,8 @@ public class TiledTXT {
     * @param String filePath
     * @return TileMap
     */
-    public static TileMap load(GGTexture tileSet, InputStream is) {
-        TileMap tilemap = new TileMap(tileSet);
+    public static GGTileMap load(GGTexture tileSet, InputStream is) {
+        GGTileMap tilemap = new GGTileMap(tileSet);
         
         try {
             /*Reading tileMap file. If exception a error message are write*/
@@ -58,7 +56,7 @@ public class TiledTXT {
     * assigns to variables.</p> 
     * @param BufferedReader bfr
     */
-    private static void LoaderHeader(BufferedReader bufferedReader, TileMap tileMap) throws Exception{
+    private static void LoaderHeader(BufferedReader bufferedReader, GGTileMap tileMap) throws Exception{
         String line;
         String[] subLine;
         

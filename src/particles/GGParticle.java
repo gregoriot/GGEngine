@@ -1,5 +1,7 @@
 package particles;
 
+import org.lwjgl.util.vector.Vector2f;
+
 import graphics.GGSprite;
 
 /**
@@ -11,11 +13,12 @@ import graphics.GGSprite;
 public class GGParticle extends GGSprite{
 	/** Duration of particle */
     public int lifeSpan;
-
-    /** Object responsible for update the particle */
-    private GGSprite update;
     
-    /** Object responsible for draw the particle */
+    public Vector2f vectorVelocity;
+    public float velocity;
+    public float angleDegress;
+    
+    private GGSprite update;
     private GGSprite draw;
     
     /**
@@ -29,15 +32,26 @@ public class GGParticle extends GGSprite{
      * @param GGSprite update
      * @param GGSprite draw
      * */
-    public GGParticle(float x, float y, float width, float height, int lifeSpan, GGSprite update, GGSprite draw) {
+    public GGParticle(GGSprite parent, float x, float y, float width, float height, int lifeSpan, float velocity, float angleDegress,
+    		GGSprite update, GGSprite draw) {
         super(x, y, width, height);
-        this.lifeSpan = lifeSpan;
+        this.parent = parent;
+        
+        this.velocity = velocity;
+        this.angleDegress = angleDegress;
         
         this.update = update;
         this.draw = draw;
         
-        update.parent = this;
-        draw.parent = this;
+        this.update.parent = this;
+        this.draw.parent = this;
+        
+    	angleRadian = (float)Math.toRadians(angleDegress);
+        
+        vectorVelocity = new Vector2f((float)(velocity * Math.sin(angleRadian)),
+                (float)-(velocity * Math.cos(angleRadian)));
+        
+        this.lifeSpan = lifeSpan;
     }
     
     /**
@@ -50,7 +64,7 @@ public class GGParticle extends GGSprite{
         lifeSpan -= difTime;
         
         if(lifeSpan > 0){
-            update.update(difTime);
+        	update.update(difTime);
             draw.update(difTime);
         }else{
             active = false;

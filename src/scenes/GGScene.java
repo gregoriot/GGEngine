@@ -22,9 +22,14 @@ import utils.GGGamePanel;
 */
 public abstract class GGScene {
     
-	/** Parent, this object controla the game loop, and all game. */
+	public static final int LEFT_BUTTON = 0;
+	public static final int RIGHT_BUTTON = 1;
+	public static final int MIDDLE_BUTTON = 2;
+	
+	public static GGScene instance;
+	
+	/** Parent, this object control the game loop, and all game. */
     public GGGamePanel parent;
-    
     
     /** Position of scene */
     public Vector2f position;
@@ -46,6 +51,9 @@ public abstract class GGScene {
     
     /** Auxiliary list, used to sort the sprites that will draw */
     private LinkedList<GGSprite> garbageTruck = new LinkedList<GGSprite>();
+    
+    /** Auxiliary list, used to sort the sprites that will draw */
+    private LinkedList<GGSprite> addTruck = new LinkedList<GGSprite>();
 
     /** Number of list to draw in scene */
     private int numberOfLayers;
@@ -58,6 +66,7 @@ public abstract class GGScene {
      * */
     public GGScene(GGGamePanel gamePanel, int numberOfLayers, int width, int height){
         parent = gamePanel;
+        instance = this;
         
         position = new Vector2f();
         mousePosition = new Vector2f();
@@ -79,7 +88,8 @@ public abstract class GGScene {
      */
     public void attachSprite(GGSprite s, int layer){
     	try{
-    		graphicsElements.get(layer).add(s);
+    		s.layerScene = layer;
+    		addTruck.add(s);
     	}catch(Exception e){
     		System.out.println("Scene - attachSprite - Dont possible attach sprite, error: "+e);
     	}
@@ -92,17 +102,9 @@ public abstract class GGScene {
      */
     public void detachSprite(GGSprite detachS, int layer){
     	try{
-	    	for (Iterator<GGSprite> iterator = graphicsElements.get(layer).iterator(); iterator.hasNext();) {
-				GGSprite s = (GGSprite)iterator.next();
-				
-				/* Find and remove of element list */
-				if(s == detachS){
-					graphicsElements.remove(s);
-					break;
-				}
-	    	}
+			garbageTruck.add(detachS);
     	}catch(Exception e){
-    		System.out.println("Scene - attachSprite - Dont possible detach sprite, error: "+e);
+    		System.out.println("Scene - detachSprite - Dont possible detach sprite, error: "+e);
     	}
     }
     
@@ -122,8 +124,6 @@ public abstract class GGScene {
      * @param int difTime
      */
     public void update(int difTime){
-    	garbageTruck = new LinkedList<GGSprite>();
-    	
     	/* List elements inactive in element list and put in remove list if not update her*/
     	for (Iterator<LinkedList<GGSprite>> iteratorLs = graphicsElements.iterator(); iteratorLs.hasNext();) {
     		LinkedList<GGSprite> ls = iteratorLs.next();
@@ -141,7 +141,8 @@ public abstract class GGScene {
 	    	}
     	}
     	
-    	graphicsElements.removeAll(garbageTruck);
+    	runGarbageTruck();
+    	runAddTruck();
     }
     
     /** 
@@ -167,7 +168,12 @@ public abstract class GGScene {
     	for (Iterator<LinkedList<GGSprite>> iteratorLs = graphicsElements.iterator(); iteratorLs.hasNext();) {
     		LinkedList<GGSprite> ls = iteratorLs.next();
     		
-    		sortElementList(ls);
+    		try {
+				sortElementList(ls);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("GGScene - render - ERROR SORT ELEMENT LIST");
+			}
     	}
 		
 		/* render each sprite already ordered of draw list */
@@ -222,7 +228,7 @@ public abstract class GGScene {
     /** 
      * sort element list.
      */
-    private void sortElementList(LinkedList<GGSprite> list){
+    private void sortElementList(LinkedList<GGSprite> list) throws Exception{
 		/* Sort draw list, with respect to y of sprite */
 		Collections.sort(list, new Comparator<GGSprite>() {
 			@Override
@@ -234,5 +240,19 @@ public abstract class GGScene {
 		        }
 			}
 		}); 
+    }
+    
+    private void runGarbageTruck(){    	
+    	for(GGSprite s : garbageTruck){
+    		graphicsElements.get(s.layerScene).remove(s);
+    	}
+    }
+    
+    private void runAddTruck(){    	
+    	for(int i=0; i<addTruck.size(); i++){
+    		GGSprite s = addTruck.get(i);
+    		graphicsElements.get(s.layerScene).add(s);
+    	}
+    	addTruck.clear();
     }
 }

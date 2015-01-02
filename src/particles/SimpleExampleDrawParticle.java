@@ -1,28 +1,25 @@
 package particles;
 
+import graphics.GGSprite;
 import openGL.GGTexture;
 import openGL.GGRenderGL;
 
-public class SimpleExampleDraw{
+public class SimpleExampleDrawParticle extends GGSprite{
 
-    public GGParticle particle;
+	private GGTexture texture;
 
-    private GGTexture texture;
-    
-    public SimpleExampleDraw(GGTexture texture){
+    public SimpleExampleDrawParticle(GGTexture texture){
         this.texture = texture;
     }
     
-    public void init(GGParticle particle){
-        this.particle = particle;
-    }
-    
+    @Override
     public void update(int difTime) {
 
     }
 
+    @Override
     public void render() {
-        GGRenderGL.drawRectWithTexture(texture, 1, particle.position.x, particle.position.y,
-                particle.width, particle.height, particle.angleRadian);
-    }
+        GGRenderGL.drawRectWithTexture(texture, 1, parent.position.x, parent.position.y,
+                parent.width, parent.height, parent.angleRadian);
+    } 
 }
