@@ -276,15 +276,10 @@ public class GGRenderGL {
 	}
 	
 	public static void drawWithTexture(int typeObj, GGTexture texture, float alpha, int verticesId, int texCoordsId, int indicesId, int qtdIndices){
-        Matrix4f.mul(matrixProjection, matrixModelView, matrixModelViewProjection);
-        matrixBuffer.position(0);
-        matrixModelViewProjection.store(matrixBuffer);
-        matrixBuffer.position(0);
-        
-        shaderSimpleTexure.render(typeObj, texture.id, alpha, verticesId, texCoordsId, indicesId, qtdIndices, matrixBuffer);
+        drawWithTexture(typeObj, texture, alpha, 0, 0, verticesId, texCoordsId, indicesId, qtdIndices);
     }
 	
-	public static void drawWithTexture(int typeObj, GGTexture texture, float alpha, float posX, float posY,int verticesId, int texCoordsId, int indicesId, int qtdIndices){
+	public static void drawWithTexture(int typeObj, GGTexture texture, float alpha, float posX, float posY, int verticesId, int texCoordsId, int indicesId, int qtdIndices){
         Matrix4f custom = new Matrix4f(matrixModelView);
         custom.translate(new Vector3f(posX, posY, 0f));
         
@@ -294,5 +289,21 @@ public class GGRenderGL {
         matrixBuffer.position(0);
         
         shaderSimpleTexure.render(typeObj, texture.id, alpha, verticesId, texCoordsId, indicesId, qtdIndices, matrixBuffer);
+    }
+	
+	public static void drawWithTexture(int typeObj, GGTexture texture, float alpha, FloatBuffer verticesBuffer, FloatBuffer texCoordsBuffer, IntBuffer indicesBuffer){
+	    drawWithTexture(typeObj, texture, alpha, 0, 0, verticesBuffer, texCoordsBuffer, indicesBuffer);
+    }
+	
+	public static void drawWithTexture(int typeObj, GGTexture texture, float alpha, float posX, float posY, FloatBuffer verticesBuffer, FloatBuffer texCoordsBuffer, IntBuffer indicesBuffer){
+        Matrix4f custom = new Matrix4f(matrixModelView);
+        custom.translate(new Vector3f(posX, posY, 0f));
+        
+        Matrix4f.mul(matrixProjection, custom, matrixModelViewProjection);
+        matrixBuffer.position(0);
+        matrixModelViewProjection.store(matrixBuffer);
+        matrixBuffer.position(0);
+        
+        shaderSimpleTexure.render(typeObj, texture.id, alpha, verticesBuffer, texCoordsBuffer, indicesBuffer, matrixBuffer);
     }
 }
