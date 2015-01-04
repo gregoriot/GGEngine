@@ -10,11 +10,28 @@ import openGL.GGRenderGL;
 
 public class GGFont {
     
-    public static void render(GGTexture font, String text, float alpha, float posX, float posY, float size){
+	public float size;
+	
+	private GGTexture font;
+	
+	public GGFont(GGTexture font, float size){
+		this.font = font;
+		this.size = size;
+	}
+	
+	public float getSize(){
+		return size;
+	}
+	
+	public void setSize(float _size){
+		size = _size;
+	}
+	
+    public void render(String text, float alpha, float posX, float posY){
         byte[] characters = text.getBytes();
         
         float texProp = font.proportionX/16f;
-        float fontSize = font.width/16f*size;
+        float fontSize = (font.width/16f)*size;
         
         int[] indices = new int[characters.length*3*2];
         float[] vertices = new float[characters.length*4*3];
@@ -36,20 +53,20 @@ public class GGFont {
 
             int posVertices = i*12;
             //First vertex
-            vertices[posVertices] = posX + charX;
-            vertices[posVertices+1] = posY + fontSize;
+            vertices[posVertices] = charX;
+            vertices[posVertices+1] = fontSize;
             vertices[posVertices+2] = 0;
             //Second vertex
-            vertices[posVertices+3] = posX + charX + fontSize;
-            vertices[posVertices+4] = posY + fontSize;
+            vertices[posVertices+3] = charX + fontSize;
+            vertices[posVertices+4] =  fontSize;
             vertices[posVertices+5] = 0;
             //Third vertex
-            vertices[posVertices+6] = posX + charX + fontSize;
-            vertices[posVertices+7] = posY;
+            vertices[posVertices+6] = charX + fontSize;
+            vertices[posVertices+7] = 0;
             vertices[posVertices+8] = 0;
             //Fourth vertex
-            vertices[posVertices+9] = posX + charX;
-            vertices[posVertices+10] = posY;
+            vertices[posVertices+9] = charX;
+            vertices[posVertices+10] = 0;
             vertices[posVertices+11] = 0;
             
             int posTexCoords = i*8;
@@ -83,5 +100,4 @@ public class GGFont {
         
         GGRenderGL.drawWithTexture(GL11.GL_TRIANGLES, font, alpha, posX, posY, verticesBuffer, texCoordsBuffer, indicesBuffer);
     }
-    
 }
