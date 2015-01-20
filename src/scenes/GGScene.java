@@ -10,9 +10,9 @@ import java.util.LinkedList;
 import openGL.GGRenderGL;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Vector2f;
 
 import utils.GGGamePanel;
+import utils.PVector;
 
 /**
 * Scene, abstract class. Scene is a struct of game objects.
@@ -26,13 +26,11 @@ public abstract class GGScene {
 	public static final int RIGHT_BUTTON = 1;
 	public static final int MIDDLE_BUTTON = 2;
 	
-	public static GGScene instance;
-	
 	/** Parent, this object control the game loop, and all game. */
     public GGGamePanel parent;
     
     /** Position of scene */
-    public Vector2f position;
+    public PVector position;
     
     /** Dimensions of scene in axis x*/
     public int width;
@@ -43,7 +41,7 @@ public abstract class GGScene {
     public float zoom = 1f;
     
     /** Position of mouse in relation to Screen */
-    protected Vector2f mousePosition;
+    protected PVector mousePosition;
     protected int mouseWheel;
     
     /** List with all sprites of scene in layers */
@@ -66,10 +64,9 @@ public abstract class GGScene {
      * */
     public GGScene(GGGamePanel gamePanel, int numberOfLayers, int width, int height){
         parent = gamePanel;
-        instance = this;
         
-        position = new Vector2f();
-        mousePosition = new Vector2f();
+        position = new PVector();
+        mousePosition = new PVector();
         
         this.width = width;
         this.height = height;
@@ -216,8 +213,8 @@ public abstract class GGScene {
      * 
      * @return Vector2f, position of mouse in world coordinate.
      */
-    public Vector2f mouseToWorldCoordinate(){
-    	Vector2f result = new Vector2f();
+    public PVector mouseToWorldCoordinate(){
+    	PVector result = new PVector();
     	
     	result.x = (mousePosition.x/zoom) - (parent.width/zoom/2) + position.x;
      	result.y = (((parent.height-mousePosition.y)/zoom) - (parent.height/zoom/2) - position.y)*-1;

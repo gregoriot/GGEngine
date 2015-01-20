@@ -138,7 +138,7 @@ public class GGCollision {
 	}
 	
 	/**
-	 * 0 - don't collid
+	 * 0 - don't Collide
 	 * 1 - left
 	 * 2 - Right
 	 * 3 - top

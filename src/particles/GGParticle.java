@@ -1,7 +1,6 @@
 package particles;
 
-import org.lwjgl.util.vector.Vector2f;
-
+import utils.PVector;
 import graphics.GGSprite;
 
 /**
@@ -14,7 +13,7 @@ public class GGParticle extends GGSprite{
 	/** Duration of particle */
     public int lifeSpan;
     
-    public Vector2f vectorVelocity;
+    public PVector vectorVelocity;
     public float velocity;
     public float angleDegress;
     
@@ -48,11 +47,16 @@ public class GGParticle extends GGSprite{
         
     	angleRadian = (float)Math.toRadians(angleDegress);
         
-        vectorVelocity = new Vector2f((float)(velocity * Math.sin(angleRadian)),
+        vectorVelocity = new PVector((float)(velocity * Math.sin(angleRadian)),
                 (float)-(velocity * Math.cos(angleRadian)));
         
         this.lifeSpan = lifeSpan;
     }
+    
+	@Override
+	protected void solid() {
+		solid = false;
+	}
     
     /**
      * Update particle while life span most zero, using update s
@@ -77,5 +81,4 @@ public class GGParticle extends GGSprite{
     public void render() {
         draw.render();
     }
-
 }

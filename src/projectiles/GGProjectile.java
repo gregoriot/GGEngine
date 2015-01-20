@@ -1,8 +1,7 @@
 package projectiles;
 
+import utils.PVector;
 import graphics.GGSprite;
-
-import org.lwjgl.util.vector.Vector2f;
 
 /**
 * Projectile
@@ -12,9 +11,9 @@ import org.lwjgl.util.vector.Vector2f;
 */
 public class GGProjectile extends GGSprite{
 	
-    public Vector2f vectorVelocity;
+    public PVector vectorVelocity;
     public float velocity;
-    public Vector2f addVelocity;
+    public PVector addVelocity;
     public float angleDegress;
     
     private GGSprite update;
@@ -29,7 +28,7 @@ public class GGProjectile extends GGSprite{
      * @param ProjectileUpdate update
      * @param ProjectileDraw draw
      * */
-    public GGProjectile(GGSprite parent, float x, float y, float width, float height, float velocity, Vector2f addVelocity,
+    public GGProjectile(GGSprite parent, float x, float y, float width, float height, float velocity, PVector addVelocity,
     		float angleDegress, GGSprite update, GGSprite draw) {
         super(x, y, width, height);
         this.parent = parent;
@@ -46,12 +45,17 @@ public class GGProjectile extends GGSprite{
         
     	angleRadian = (float)Math.toRadians(angleDegress);
         
-        vectorVelocity = new Vector2f((float)(velocity * Math.sin(angleRadian)),
+        vectorVelocity = new PVector((float)(velocity * Math.sin(angleRadian)),
                 (float)-(velocity * Math.cos(angleRadian)));
         
         vectorVelocity.x += addVelocity.x;
         vectorVelocity.y += addVelocity.y;
     }
+    
+	@Override
+	protected void solid() {
+		solid = true;
+	}
 
     /** 
      * Update,call component responsible to update position and states of projective
@@ -59,7 +63,7 @@ public class GGProjectile extends GGSprite{
      * @param int difTime
      */
     @Override
-    public void update(int difTime) {
+    public void update(int difTime) {    	
         update.update(difTime);
         draw.update(difTime);
     }

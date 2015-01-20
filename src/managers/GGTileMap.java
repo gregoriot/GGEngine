@@ -14,6 +14,8 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 
+import utils.PVector;
+
 public class GGTileMap extends GGSprite {
     
     public LinkedList<Integer[][]> layers;
@@ -40,6 +42,11 @@ public class GGTileMap extends GGSprite {
         layers = new LinkedList<Integer[][]>();
         texCoordsBuffersId = new LinkedList<Integer>();
     }
+    
+	@Override
+	protected void solid() {
+		solid = false;
+	}
     
     public void initBuffers() {
         int tilesQts = mapQtdX*mapQtdY;
@@ -169,5 +176,9 @@ public class GGTileMap extends GGSprite {
             }
         }
         GGRenderGL.popMatrix();
+    }
+    
+    public PVector toTileCoordenation(GGSprite sprite){
+    	return new PVector(sprite.position.x/tileSizeX, sprite.position.y/tileSizeY);
     }
 }

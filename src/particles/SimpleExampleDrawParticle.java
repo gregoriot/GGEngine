@@ -12,6 +12,11 @@ public class SimpleExampleDrawParticle extends GGSprite{
         this.texture = texture;
     }
     
+	@Override
+	protected void solid() {
+		solid = false;
+	}
+    
     @Override
     public void update(int difTime) {
 

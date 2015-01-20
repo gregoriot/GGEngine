@@ -8,16 +8,16 @@ import java.util.LinkedList;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.util.vector.Vector2f;
 
 import utils.GGGamePanel;
+import utils.PVector;
 
 public class GGDisplay {
 
     private static LinkedList<DisplayMode> displays = new LinkedList<DisplayMode>();
     private static int currentDisplay = -1;
     @SuppressWarnings("unused")
-    private Vector2f locationWindow;
+    private PVector locationWindow;
     
     public static void loadDisplays(){
         try {

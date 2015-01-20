@@ -1,7 +1,8 @@
 package graphics;
 
 import java.awt.geom.Rectangle2D;
-import org.lwjgl.util.vector.Vector2f;
+
+import utils.PVector;
 
 /**
 * Sprite, abstract class. Sprite is a most simple strut of game.
@@ -12,7 +13,7 @@ import org.lwjgl.util.vector.Vector2f;
 public abstract class GGSprite {
     
 	/** Position in scene */
-    public Vector2f position;
+    public PVector position;
     
     /** Dimensions of scene in axis x*/
     public float width;
@@ -28,10 +29,17 @@ public abstract class GGSprite {
     /** death or alive in scene */
     public boolean active;
     
+    /** solid */
+    public boolean solid;
+    
     /** If have parent */
     public GGSprite parent;
     
     public int layerScene;
+    
+	public float currentMoveSpeed;
+	public PVector velocity;
+	public float maxforce;
 
     /**
      * Sprite constructor
@@ -42,7 +50,7 @@ public abstract class GGSprite {
      * @param float height
      * */
     public GGSprite(float x, float y, float width, float height){
-        this.position = new Vector2f(x, y);
+        this.position = new PVector	(x, y);
         this.width = width;
         this.height = height;
         
@@ -50,7 +58,11 @@ public abstract class GGSprite {
         
         this.active = true;
         this.parent = null;
+        
+        solid();
     }
+    
+    protected abstract void solid();
     
     /**
      * Sprite empty constructor

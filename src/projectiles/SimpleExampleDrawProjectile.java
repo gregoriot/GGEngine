@@ -12,6 +12,11 @@ public class SimpleExampleDrawProjectile extends GGSprite{
 	        this.texture = texture;
 	    }
 	    
+		@Override
+		protected void solid() {
+			solid = true;
+		}
+		
 	    @Override
 	    public void update(int difTime) {
 
