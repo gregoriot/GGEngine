@@ -41,7 +41,7 @@ public class GGRenderGL {
 	private static IntBuffer indicesBufferRectWired;
 	
 	public static int verticesBufferId;
-	public static int texCoordsBufferId; //Not used
+	public static int texCoordsBufferId;
 	public static int indicesBufferRectId;
 	public static int indicesBufferRectWiredId;
 	
@@ -140,11 +140,11 @@ public class GGRenderGL {
 		
 		
 		int indicesQuadWired[] = {
-				0,1,
-				1,2,
-		  		2,3,
-		  		3,0
-		  	};
+			0,1,
+			1,2,
+	  		2,3,
+	  		3,0
+	  	};
 		
 		indicesBufferRectWired = BufferUtils.createIntBuffer(indicesQuadWired.length);
 		indicesBufferRectWired.put(indicesQuadWired);
@@ -227,19 +227,19 @@ public class GGRenderGL {
 		shaderSimpleColor.render(GL11.GL_LINES, color, verticesBufferId, indicesBufferRectWiredId, 8, matrixBuffer);
 	}
 	
-	public static void drawRectWithTexture(GGTexture texture, float alpha, float posX, float posY, float width, float height){
-	    drawRectWithTexture(texture, alpha, posX, posY, width, height, 0, 0, texture.proportionX, texture.proportionY, 0);
+	public static void drawRectWithTexture(GGTexture texture, Color color, float posX, float posY, float width, float height){
+	    drawRectWithTexture(texture, color, posX, posY, width, height, 0, 0, texture.proportionX, texture.proportionY, 0);
 	}
 	
-	public static void drawRectWithTexture(GGTexture texture, float alpha, float posX, float posY, float width, float height, float angleRadian){
-		drawRectWithTexture(texture, alpha, posX, posY, width, height, 0, 0, texture.proportionX, texture.proportionY, angleRadian);
+	public static void drawRectWithTexture(GGTexture texture, Color color, float posX, float posY, float width, float height, float angleRadian){
+		drawRectWithTexture(texture, color, posX, posY, width, height, 0, 0, texture.proportionX, texture.proportionY, angleRadian);
 	}
 	
-	public static void drawRectWithTexture(GGTexture texture, float alpha, float posX, float posY, float posW, float posH, float texX, float texY, float texW, float texH){
-	    drawRectWithTexture(texture, alpha, posX, posY, posW, posH, texX, texY, texW, texH, 0);
+	public static void drawRectWithTexture(GGTexture texture, Color color, float posX, float posY, float posW, float posH, float texX, float texY, float texW, float texH){
+	    drawRectWithTexture(texture, color, posX, posY, posW, posH, texX, texY, texW, texH, 0);
 	}
 	
-	public static void drawRectWithTexture(GGTexture texture, float alpha, float posX, float posY, float posW, float posH, float texX, float texY, float texW, float texH, float angleRadian){
+	public static void drawRectWithTexture(GGTexture texture, Color color, float posX, float posY, float posW, float posH, float texX, float texY, float texW, float texH, float angleRadian){
 		float width2 = posW/2f;
 		float height2 = posH/2f;
 	    
@@ -272,14 +272,14 @@ public class GGRenderGL {
 		matrixModelViewProjection.store(matrixBuffer);
 		matrixBuffer.position(0);
 		
-		shaderSimpleTexure.render(GL11.GL_TRIANGLES, texture.id, alpha, verticesBuffer, texCoordsBuffer, indicesBufferRect, matrixBuffer);
+		shaderSimpleTexure.render(GL11.GL_TRIANGLES, texture.id, color, verticesBuffer, texCoordsBuffer, indicesBufferRect, matrixBuffer);
 	}
 	
-	public static void drawWithTexture(int typeObj, GGTexture texture, float alpha, int verticesId, int texCoordsId, int indicesId, int qtdIndices){
-        drawWithTexture(typeObj, texture, alpha, 0, 0, verticesId, texCoordsId, indicesId, qtdIndices);
+	public static void drawWithTexture(int typeObj, GGTexture texture, Color color, int verticesId, int texCoordsId, int indicesId, int qtdIndices){
+        drawWithTexture(typeObj, texture, color, 0, 0, verticesId, texCoordsId, indicesId, qtdIndices);
     }
 	
-	public static void drawWithTexture(int typeObj, GGTexture texture, float alpha, float posX, float posY, int verticesId, int texCoordsId, int indicesId, int qtdIndices){
+	public static void drawWithTexture(int typeObj, GGTexture texture, Color color, float posX, float posY, int verticesId, int texCoordsId, int indicesId, int qtdIndices){
         Matrix4f custom = new Matrix4f(matrixModelView);
         custom.translate(new Vector3f(posX, posY, 0f));
         
@@ -288,14 +288,14 @@ public class GGRenderGL {
         matrixModelViewProjection.store(matrixBuffer);
         matrixBuffer.position(0);
         
-        shaderSimpleTexure.render(typeObj, texture.id, alpha, verticesId, texCoordsId, indicesId, qtdIndices, matrixBuffer);
+        shaderSimpleTexure.render(typeObj, texture.id, color, verticesId, texCoordsId, indicesId, qtdIndices, matrixBuffer);
     }
 	
-	public static void drawWithTexture(int typeObj, GGTexture texture, float alpha, FloatBuffer verticesBuffer, FloatBuffer texCoordsBuffer, IntBuffer indicesBuffer){
-	    drawWithTexture(typeObj, texture, alpha, 0, 0, verticesBuffer, texCoordsBuffer, indicesBuffer);
+	public static void drawWithTexture(int typeObj, GGTexture texture, Color color, FloatBuffer verticesBuffer, FloatBuffer texCoordsBuffer, IntBuffer indicesBuffer){
+	    drawWithTexture(typeObj, texture, color, 0, 0, verticesBuffer, texCoordsBuffer, indicesBuffer);
     }
 	
-	public static void drawWithTexture(int typeObj, GGTexture texture, float alpha, float posX, float posY, FloatBuffer verticesBuffer, FloatBuffer texCoordsBuffer, IntBuffer indicesBuffer){
+	public static void drawWithTexture(int typeObj, GGTexture texture, Color color, float posX, float posY, FloatBuffer verticesBuffer, FloatBuffer texCoordsBuffer, IntBuffer indicesBuffer){
         Matrix4f custom = new Matrix4f(matrixModelView);
         custom.translate(new Vector3f(posX, posY, 0f));
         
@@ -304,6 +304,6 @@ public class GGRenderGL {
         matrixModelViewProjection.store(matrixBuffer);
         matrixBuffer.position(0);
         
-        shaderSimpleTexure.render(typeObj, texture.id, alpha, verticesBuffer, texCoordsBuffer, indicesBuffer, matrixBuffer);
+        shaderSimpleTexure.render(typeObj, texture.id, color, verticesBuffer, texCoordsBuffer, indicesBuffer, matrixBuffer);
     }
 }

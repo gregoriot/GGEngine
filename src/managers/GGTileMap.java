@@ -13,6 +13,7 @@ import openGL.GGRenderGL;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
+import org.newdawn.slick.Color;
 
 import utils.PVector;
 
@@ -160,7 +161,7 @@ public class GGTileMap extends GGSprite {
             GGRenderGL.translate(position.x, position.y);
             
             for (Iterator<Integer> iterator = texCoordsBuffersId.iterator(); iterator.hasNext();) {
-                GGRenderGL.drawWithTexture(GL11.GL_TRIANGLES, texture, 1,
+                GGRenderGL.drawWithTexture(GL11.GL_TRIANGLES, texture, Color.white,
                         verticesBufferId, iterator.next(),
                         indicesBufferRectId, indicesQtd);
             }
@@ -170,7 +171,7 @@ public class GGTileMap extends GGSprite {
             GGRenderGL.translate(-width/2f, -height/2f);
             
             for (Iterator<Integer> iterator = texCoordsBuffersId.iterator(); iterator.hasNext();) {
-                GGRenderGL.drawWithTexture(GL11.GL_TRIANGLES, texture, 1,
+                GGRenderGL.drawWithTexture(GL11.GL_TRIANGLES, texture, Color.white,
                         verticesBufferId, iterator.next(),
                         indicesBufferRectId, indicesQtd);
             }

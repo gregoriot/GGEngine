@@ -5,6 +5,7 @@ import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Color;
 
 import openGL.GGRenderGL;
 
@@ -27,7 +28,7 @@ public class GGFont {
 		size = _size;
 	}
 	
-    public void render(String text, float alpha, float posX, float posY){
+    public void render(String text, Color color, float posX, float posY){
         byte[] characters = text.getBytes();
         
         float texProp = font.proportionX/16f;
@@ -98,6 +99,6 @@ public class GGFont {
         texCoordsBuffer.put(texCoords);
         texCoordsBuffer.flip();
         
-        GGRenderGL.drawWithTexture(GL11.GL_TRIANGLES, font, alpha, posX, posY, verticesBuffer, texCoordsBuffer, indicesBuffer);
+        GGRenderGL.drawWithTexture(GL11.GL_TRIANGLES, font, color, posX, posY, verticesBuffer, texCoordsBuffer, indicesBuffer);
     }
 }
